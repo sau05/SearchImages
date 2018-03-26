@@ -118,7 +118,7 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
 
     @Override
     public void onLoadMore() {
-        Log.d("resultactivity","onloadmore"+resultsResponses.size());
+//        Log.d("resultactivity","onloadmore"+resultsResponses.size());
         resultsResponses.add(null);
         recyclerAdapter.notifyItemInserted(resultsResponses.size() - 1);
         new Handler().postDelayed(new Runnable() {
