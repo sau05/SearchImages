@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SearchImages</string>
+    <string name="access_key">fcbeca22c6b8df10aefc27cbb309ac1f0ddc6464e80f5ca5e9f2a5a275c35e27</string>
+    <string name="secret_key">72109844ef150f44b5268ed2040b2eb57adabf55bcc7b49468a567e1af2fad71</string>
+</resources>

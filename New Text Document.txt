@@ -1,0 +1,23 @@
+Hi,
+ Nice talking to you Saurabh, We are processing you to next round. Please do the given task, push it to github with readme / Screenshots and share the link.
+
+Requirements:
+1. Main screen should have search bar.
+2. On searching the item next screen should show the image result of the given item name,
+   (eg: search: baby -> image results of baby)
+3. On scrolling to end, new data (image should be added) should be added with old results.
+
+Consider:
+1. Recycler view,
+2. Card view (load result image inside),
+3. Proper coding style with comments(MVC,MVP..),
+4. Proper Memory Management (Should not crash on OOM exception).
+5. Any Library for Image loading.
+6. Proper Exception handling.
+
+Api to be used:
+- https://unsplash.com/developers
+
+(Please register and get key to use api, Only 50 request per hour, so use api call wisely)
+
+9601657729
