@@ -54,7 +54,7 @@ public class SQLiteDataProvider {
         ArrayList<ResultsResponse> results = new ArrayList<>();
         try {
 
-            c = db.query(TBL_RESULT, new String[]{COL_RESULT_ID,COL_FULL,COL_RAW,COL_REGULAR,COL_SMALL,COL_THUMB}, COL_ID+" > ?", new String[]{String.valueOf(start)}, null, null, "id LIMIT "+String.valueOf(start+10));
+            c = db.query(TBL_RESULT, new String[]{COL_RESULT_ID,COL_FULL,COL_RAW,COL_REGULAR,COL_SMALL,COL_THUMB}, COL_ID+" > ?", new String[]{String.valueOf(start)}, null, null, "id LIMIT "+String.valueOf(10));
             while (c.moveToNext()) {
                 ResultsResponse response = new ResultsResponse();
                 UrlResponse urlResponse = new UrlResponse();

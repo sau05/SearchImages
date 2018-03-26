@@ -33,6 +33,7 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
     private LinearLayoutManager mLayoutManager;
     private ArrayList<ResultsResponse> resultsResponses;
     private SQLiteDataProvider dataProvider;
+    private MainResponse mainResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +68,8 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
     protected void onPause() {
         super.onPause();
         try{
-            if (resultsResponses!=null)
-            dataProvider.saveResults(resultsResponses);
+            if (mainResponse.getResults()!=null)
+            dataProvider.saveResults(mainResponse.getResults());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -87,7 +88,7 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        MainResponse mainResponse=gson.fromJson(response,MainResponse.class);
+                        mainResponse=gson.fromJson(response,MainResponse.class);
                         resultsResponses=mainResponse.getResults();
                         setAdapter();
 
