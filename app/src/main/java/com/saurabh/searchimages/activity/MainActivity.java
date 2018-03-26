@@ -3,7 +3,7 @@ package com.saurabh.searchimages.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        Toolbar mToolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         initViews();
     }
 
@@ -32,13 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Log.d("mainactivity","s:"+s);
         if (s!=null&&!"".equals(s)){
             Intent intent=new Intent(getApplicationContext(),ResultActivity.class);
             intent.putExtra("query",s);
             startActivity(intent);
-        }else {
-//            se
         }
     }
 

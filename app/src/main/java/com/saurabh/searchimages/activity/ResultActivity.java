@@ -6,9 +6,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,8 +25,6 @@ import com.saurabh.searchimages.model.MainResponse;
 import com.saurabh.searchimages.model.ResultsResponse;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ResultActivity extends AppCompatActivity implements OnLoadMoreListener {
 
@@ -40,7 +38,10 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
+        Toolbar mToolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initViews();
 
         dataProvider=new SQLiteDataProvider(getApplicationContext(),new SQLiteDataHelper(getApplicationContext()));
@@ -66,7 +67,7 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
     protected void onPause() {
         super.onPause();
         try{
-            Log.d("onstop",""+resultsResponses.size());
+            if (resultsResponses!=null)
             dataProvider.saveResults(resultsResponses);
         }catch (Exception e){
             e.printStackTrace();
@@ -87,7 +88,6 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         MainResponse mainResponse=gson.fromJson(response,MainResponse.class);
-//                        Log.d("response",""+mainResponse.getResults().get(0).getUrls().getFull());
                         resultsResponses=mainResponse.getResults();
                         setAdapter();
 
@@ -97,14 +97,7 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
             public void onErrorResponse(VolleyError error) {
 
             }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-//                params.put("Authorization","Client-ID "+getString(R.string.access_key));
-                return params;
-            }
-        };
+        });
         Volley.newRequestQueue(this).add(stringRequest);
     }
 
@@ -118,9 +111,14 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
 
     @Override
     public void onLoadMore() {
-//        Log.d("resultactivity","onloadmore"+resultsResponses.size());
-        resultsResponses.add(null);
-        recyclerAdapter.notifyItemInserted(resultsResponses.size() - 1);
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                resultsResponses.add(null);
+                recyclerAdapter.notifyItemInserted(resultsResponses.size() - 1);
+            }
+        });
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -134,5 +132,13 @@ public class ResultActivity extends AppCompatActivity implements OnLoadMoreListe
                 recyclerAdapter.setLoaded();
             }
         },2000);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
